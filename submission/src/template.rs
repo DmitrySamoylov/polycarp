@@ -3,5 +3,6 @@
 // Visibility: on
 
 pub fn solve(mut input: crate::input::Input) -> String {
-    unimplemented!()
+    let mut ans = String::new();
+    ans
 }
