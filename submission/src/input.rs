@@ -66,6 +66,10 @@ impl Input<'_> {
             .collect()
     }
 
+    pub fn gets(&mut self) -> Vec<char> {
+        self.get::<String>().chars().collect()
+    }
+
     fn parse_next<T>(&mut self) -> T
     where
         T: FromStr + Display,
