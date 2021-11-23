@@ -1,5 +1,6 @@
 pub mod divisors;
 pub mod factorize;
+pub mod group_by;
 pub mod input;
 pub mod input_get2;
 pub mod input_get3;
