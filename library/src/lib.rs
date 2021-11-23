@@ -8,3 +8,4 @@ pub mod input_getn2;
 pub mod input_getn3;
 pub mod input_gets;
 pub mod ordering;
+pub mod vec2d;
