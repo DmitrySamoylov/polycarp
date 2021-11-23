@@ -57,6 +57,11 @@ fn finalize_submission() -> anyhow::Result<()> {
         }
     }
 
+    println!(
+        "Submission is written to {}",
+        submission_dir("submission.rs")
+    );
+
     Ok(())
 }
 
