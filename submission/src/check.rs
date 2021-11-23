@@ -1,5 +1,5 @@
 // Visibility: off
-pub fn check<S: FnOnce(crate::input::Input) -> String>(
+pub fn check<S: FnOnce(&mut dyn Iterator<Item = &str>) -> String>(
     input: &str,
     expected_output: &str,
     solve: S,
@@ -7,9 +7,9 @@ pub fn check<S: FnOnce(crate::input::Input) -> String>(
     let input = &input[1..]; // Crop first \n
     let expected_output = &expected_output[1..]; // Crop first \n
 
-    let actual_output = solve(crate::input::Input {
-        iter: &mut input.split_whitespace(),
-    });
+    let mut iter = input.split_whitespace().map(AsRef::as_ref);
+
+    let actual_output = solve(&mut iter);
 
     println!("================");
     println!("Input:\n{}", input);

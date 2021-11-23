@@ -1,7 +1,6 @@
 #![allow(dead_code)]
 
 mod check;
-mod input;
 mod solve;
 
 fn main() {
@@ -9,9 +8,9 @@ fn main() {
 
     std::io::Read::read_to_string(&mut std::io::stdin(), &mut input).unwrap();
 
-    let answer = solve::solve(input::Input {
-        iter: &mut input.split_whitespace(),
-    });
+    let mut iter = input.split_whitespace().map(AsRef::as_ref);
+
+    let answer = solve::solve(&mut iter);
 
     print!("{}", answer);
 }

@@ -1,3 +1,10 @@
 pub mod divisors;
 pub mod factorize;
+pub mod input;
+pub mod input_get2;
+pub mod input_get3;
+pub mod input_getn;
+pub mod input_getn2;
+pub mod input_getn3;
+pub mod input_gets;
 pub mod ordering;
