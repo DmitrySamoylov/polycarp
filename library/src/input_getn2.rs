@@ -8,8 +8,8 @@ where
         .chunks(2)
         .map(|v| {
             (
-                super::input::just_parse(v[0]),
-                super::input::just_parse(v[1]),
+                super::input::parse_or_panic(v[0]),
+                super::input::parse_or_panic(v[1]),
             )
         })
         .collect()

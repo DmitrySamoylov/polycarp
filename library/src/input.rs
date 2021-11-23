@@ -9,10 +9,10 @@ pub fn parse_next<T>(iter: &mut dyn Iterator<Item = &str>) -> T
 where
     T: std::str::FromStr + std::fmt::Display,
 {
-    just_parse(iter.next().expect("No more items"))
+    parse_or_panic(iter.next().expect("No more items"))
 }
 
-pub fn just_parse<T: std::str::FromStr>(s: &str) -> T {
+pub fn parse_or_panic<T: std::str::FromStr>(s: &str) -> T {
     s.parse().unwrap_or_else(|_| {
         panic!(
             "Wrong type for {}, expected {}",
