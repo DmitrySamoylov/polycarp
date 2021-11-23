@@ -1,3 +1,5 @@
+// Generated with Polycarp: https://github.com/DmitrySamoylov/polycarp
+
 #![allow(dead_code)]
 
 mod check;
