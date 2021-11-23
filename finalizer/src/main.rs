@@ -40,7 +40,7 @@ fn finalize_submission() -> anyhow::Result<()> {
         }
 
         if let Some(module) = line.strip_prefix("mod ") {
-            let module = module.strip_suffix(";").unwrap();
+            let module = module.strip_suffix(';').unwrap();
 
             append_module(
                 &submission_dir(&format!("{}.rs", module)),
@@ -89,7 +89,7 @@ fn append_module(path: &str, module: &str, out_file: &mut File, ident: &str) -> 
         match line.strip_prefix("use library::") {
             Some(line) => {
                 let lib_mods = match line.starts_with('{') {
-                    false => vec![line.strip_suffix(";").unwrap()],
+                    false => vec![line.strip_suffix(';').unwrap()],
                     true => line
                         .strip_prefix('{')
                         .context("Bad import format '{'")?

@@ -7,10 +7,8 @@ pub fn divisors(x: u64) -> Vec<u64> {
         }
 
         if x % i == 0 {
-            if x / i == i {
-                ans.push(i);
-            } else {
-                ans.push(i);
+            ans.push(i);
+            if x / i != i {
                 ans.push(x / i);
             }
         }
