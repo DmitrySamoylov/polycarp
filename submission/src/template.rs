@@ -7,7 +7,12 @@ use library::input;
 // Visibility: on
 
 pub fn solve(iter: &mut dyn Iterator<Item = &str>) -> String {
-    let n: u64 = input::get(iter);
+    let t: u64 = input::get(iter);
     let mut ans = String::new();
+
+    for _ in 0..t {
+        ans += &format!("\n");
+    }
+
     ans
 }
