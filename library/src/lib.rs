@@ -1,6 +1,7 @@
 pub mod divceil;
 pub mod divisors;
 pub mod factorize;
+pub mod fibonacci;
 pub mod group_by;
 pub mod input;
 pub mod input_get2;
