@@ -1,5 +1,5 @@
 // https://github.com/rust-lang/rust/issues/80552
-trait MyGroupByTrait<T> {
+pub trait MyGroupByTrait<T> {
     fn my_group_by<P>(&self, predicate: P) -> MyGroupBy<'_, T, P>
     where
         P: Fn(&T, &T) -> bool;
