@@ -5,7 +5,7 @@ use std::{
 
 use anyhow::Context;
 use fn_error_context::context;
-use inflector::Inflector;
+use heck::ToSnakeCase;
 use serde::{Deserialize, Serialize};
 use serde_json::from_str;
 use utils::fs::{open_to_read, open_to_write};
