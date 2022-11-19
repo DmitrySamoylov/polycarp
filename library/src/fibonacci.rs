@@ -5,7 +5,7 @@ pub fn calc(mut f0: u64, mut f1: u64, n: u64) -> u64 {
 
     for _ in 2..n {
         let t = f1;
-        f1 = f1 + f0;
+        f1 += f0;
         f0 = t;
     }
 
