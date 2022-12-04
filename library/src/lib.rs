@@ -13,4 +13,5 @@ pub mod input_gets;
 pub mod itersame;
 pub mod mods;
 pub mod ordering;
+pub mod output;
 pub mod vec2d;
