@@ -14,5 +14,5 @@ fn main() {
 
     let answer = solve::solve(&mut iter);
 
-    print!("{}", answer);
+    print!("{answer}");
 }

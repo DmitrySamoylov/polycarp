@@ -8,11 +8,11 @@ use fn_error_context::context;
 use utils::fs::{open_to_read, open_to_write};
 
 fn submission_dir(file: &str) -> String {
-    format!("submission/src/{}", file)
+    format!("submission/src/{file}")
 }
 
 fn library_dir(file: &str) -> String {
-    format!("library/src/{}", file)
+    format!("library/src/{file}")
 }
 
 fn main() {
@@ -43,7 +43,7 @@ fn finalize_submission() -> anyhow::Result<()> {
             let module = module.strip_suffix(';').unwrap();
 
             append_module(
-                &submission_dir(&format!("{}.rs", module)),
+                &submission_dir(&format!("{module}.rs")),
                 module,
                 &mut submission,
                 "",
@@ -53,7 +53,7 @@ fn finalize_submission() -> anyhow::Result<()> {
         }
 
         if visible {
-            submission.write_fmt(format_args!("{}\n", line))?;
+            submission.write_fmt(format_args!("{line}\n"))?;
         }
     }
 
@@ -65,13 +65,13 @@ fn finalize_submission() -> anyhow::Result<()> {
     Ok(())
 }
 
-#[context("Appending module: path={}, module={}", path, module)]
+#[context("Appending module: path={path}, module={module}")]
 fn append_module(path: &str, module: &str, out_file: &mut File, ident: &str) -> anyhow::Result<()> {
     let reader = open_to_read(path)?;
 
     let mut visible = true;
 
-    out_file.write_fmt(format_args!("{}mod {} {{\n", ident, module))?;
+    out_file.write_fmt(format_args!("{ident}mod {module} {{\n"))?;
 
     for line in reader.lines() {
         let line = line?;
@@ -101,22 +101,22 @@ fn append_module(path: &str, module: &str, out_file: &mut File, ident: &str) -> 
 
                 for lib_mod in lib_mods {
                     append_module(
-                        &library_dir(&format!("{}.rs", lib_mod)),
+                        &library_dir(&format!("{lib_mod}.rs")),
                         lib_mod,
                         out_file,
-                        &format!("{}    ", ident),
+                        &format!("{ident}    "),
                     )?;
                 }
             }
             None => {
                 if visible {
-                    out_file.write_fmt(format_args!("{}    {}\n", ident, line))?;
+                    out_file.write_fmt(format_args!("{ident}    {line}\n"))?;
                 }
             }
         }
     }
 
-    out_file.write_fmt(format_args!("{}}}\n", ident))?;
+    out_file.write_fmt(format_args!("{ident}}}\n"))?;
 
     Ok(())
 }

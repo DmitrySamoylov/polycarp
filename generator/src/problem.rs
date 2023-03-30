@@ -64,8 +64,8 @@ fn expand_template(
                 out_file.write_fmt(format_args!("\n"))?;
                 out_file.write_fmt(format_args!("    #[test]\n"))?;
                 out_file.write_fmt(format_args!("    fn test_{}() {{\n", i + 1))?;
-                out_file.write_all(make_test_args(&t.input, "input").as_bytes())?;
-                out_file.write_all(make_test_args(&t.output, "output").as_bytes())?;
+                out_file.write_all(make_test_args("input", &t.input).as_bytes())?;
+                out_file.write_all(make_test_args("output", &t.output).as_bytes())?;
                 out_file.write_fmt(format_args!(
                     "        crate::check::check(input, output, super::solve);\n"
                 ))?;
@@ -74,34 +74,34 @@ fn expand_template(
 
             out_file.write_fmt(format_args!("}}\n"))?;
         } else {
-            out_file.write_fmt(format_args!("{}\n", line))?;
+            out_file.write_fmt(format_args!("{line}\n"))?;
         }
     }
 
     Ok(())
 }
 
-fn make_test_args(t: &str, var_name: &str) -> String {
-    format!("        let {} = r#\"\n{}\"#;\n\n", var_name, t)
+fn make_test_args(var_name: &str, test_data: &str) -> String {
+    format!("        let {var_name} = r#\"\n{test_data}\"#;\n\n")
 }
 
-#[context("Storing problem to {}", CURR_JSON)]
+#[context("Storing problem to {CURR_JSON}")]
 fn store_problem(problem: &Problem) -> anyhow::Result<()> {
     serde_json::to_writer(&open_to_write(CURR_JSON)?, &problem)
         .with_context(|| format!("Serializing {:?}", problem))
 }
 
-#[context("Performing backup of previous problem solution: {}", SOLVE_RS)]
+#[context("Performing backup of previous problem solution: {SOLVE_RS}")]
 fn backup_solution_of_prev_problem() -> anyhow::Result<()> {
-    create_dir_all(HISTORY_DIR).with_context(|| format!("Creating {}", HISTORY_DIR))?;
+    create_dir_all(HISTORY_DIR).with_context(|| format!("Creating {HISTORY_DIR}"))?;
 
     if let Ok(curr_json) = read_to_string(CURR_JSON) {
         let prev_problem = from_str::<Problem>(&curr_json)
-            .with_context(|| format!("Parsing previous problem from JSON: {}", curr_json))?;
+            .with_context(|| format!("Parsing previous problem from JSON: {curr_json}"))?;
 
-        let dst = format!("{}/{}.rs", HISTORY_DIR, prev_problem.name.to_snake_case());
+        let dst = format!("{HISTORY_DIR}/{}.rs", prev_problem.name.to_snake_case());
 
-        copy(SOLVE_RS, &dst).with_context(|| format!("Copying {} to {}", SOLVE_RS, dst))?;
+        copy(SOLVE_RS, &dst).with_context(|| format!("Copying {SOLVE_RS} to {dst}"))?;
     }
 
     Ok(())

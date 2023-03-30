@@ -12,11 +12,11 @@ pub fn check<S: FnOnce(&mut dyn Iterator<Item = &str>) -> String>(
     let actual_output = solve(&mut iter);
 
     println!("================");
-    println!("Input:\n{}", input);
+    println!("Input:\n{input}");
     println!("================");
-    println!("Expected output:\n{}", expected_output);
+    println!("Expected output:\n{expected_output}");
     println!("================");
-    println!("Actual output:\n{}", actual_output);
+    println!("Actual output:\n{actual_output}");
     println!("================");
 
     if expected_output != actual_output {
