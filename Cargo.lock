@@ -388,7 +388,7 @@ name = "finalizer"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "fn-error-context 0.2.0",
+ "fn-error-context",
  "utils",
 ]
 
@@ -400,17 +400,6 @@ checksum = "f82b0f4c27ad9f8bfd1f3208d882da2b09c301bc1c828fd3a00d0216d2fbbff6"
 dependencies = [
  "crc32fast",
  "miniz_oxide",
-]
-
-[[package]]
-name = "fn-error-context"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7dbe237cce37ed07377a50ccd977c78ee936f0f64b731caaab25ea5553b2d149"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
@@ -743,7 +732,7 @@ version = "0.1.0"
 dependencies = [
  "actix-web",
  "anyhow",
- "fn-error-context 0.2.0",
+ "fn-error-context",
  "heck",
  "serde",
  "serde_json",
@@ -1101,7 +1090,7 @@ name = "utils"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "fn-error-context 0.1.2",
+ "fn-error-context",
 ]
 
 [[package]]
