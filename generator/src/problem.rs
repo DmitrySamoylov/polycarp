@@ -60,8 +60,9 @@ fn expand_template(
                 out_file.write_fmt(format_args!("\n"))?;
                 out_file.write_fmt(format_args!("    #[test]\n"))?;
                 out_file.write_fmt(format_args!("    fn test_{}() {{\n", i + 1))?;
-                out_file.write_all(make_test_args("input", &t.input).as_bytes())?;
-                out_file.write_all(make_test_args("output", &t.output).as_bytes())?;
+                out_file.write_all(make_test_string_constants("input", &t.input, 2).as_bytes())?;
+                out_file
+                    .write_all(make_test_string_constants("output", &t.output, 2).as_bytes())?;
                 out_file.write_fmt(format_args!(
                     "        crate::check::check(input, output, super::solve);\n"
                 ))?;
@@ -77,8 +78,65 @@ fn expand_template(
     Ok(())
 }
 
-fn make_test_args(var_name: &str, test_data: &str) -> String {
-    format!("        let {var_name} = r#\"\n{test_data}\"#;\n\n")
+/// Assembles a Rust value containing a string with test data.
+///
+/// For example, if test data parsed from the task contains
+///
+/// ```
+/// 2
+/// 123
+/// 456
+/// ```
+///
+/// .. then this function would generate something like:
+///
+/// ```rust
+/// let input = indoc::indoc! {r#"
+///     2
+///     123
+///     456
+/// "#};
+/// ```
+///
+/// This value contains exactly the same string but wrapped in `indoc` to use in generated tests.
+fn make_test_string_constants(var_name: &str, test_data: &str, indent: usize) -> String {
+    let mut s = String::new();
+    let tabs = " ".repeat(indent * 4);
+    s += &format!("{tabs}let {var_name} = indoc::indoc! {{r#\"\n");
+
+    for line in test_data.split("\n") {
+        let tabs = " ".repeat((indent + 1) * 4);
+        let line = line.trim_end();
+        if !line.is_empty() {
+            s += &format!("{tabs}{line}\n");
+        }
+    }
+
+    s += &format!("{tabs}\"#}};\n\n");
+    s
+}
+
+#[test]
+fn make_test_args_is_correct() {
+    let test_data = indoc::indoc! {"
+        123
+        456
+        789
+    "};
+
+    let actual = make_test_string_constants("input", test_data, 2);
+    let expected = r##"        let input = indoc::indoc! {r#"
+            123
+            456
+            789
+        "#};
+
+"##;
+
+    println!("test_data:\n'{test_data}'");
+    println!("actual:\n'{actual}'");
+
+    assert_eq!(actual, expected);
 }
 
 #[context("Storing problem to {CURR_JSON}")]

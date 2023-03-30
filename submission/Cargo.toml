@@ -6,4 +6,5 @@ rust-version.workspace = true
 publish.workspace = true
 
 [dependencies]
+indoc.workspace = true
 library.workspace = true

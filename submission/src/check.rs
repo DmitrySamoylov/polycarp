@@ -4,9 +4,6 @@ pub fn check<S: FnOnce(&mut dyn Iterator<Item = &str>) -> String>(
     expected_output: &str,
     solve: S,
 ) {
-    let input = &input[1..]; // Crop first \n
-    let expected_output = &expected_output[1..]; // Crop first \n
-
     let mut iter = input.split_whitespace().map(AsRef::as_ref);
 
     let actual_output = solve(&mut iter);
