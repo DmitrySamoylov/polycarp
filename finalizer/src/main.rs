@@ -4,16 +4,9 @@ use std::{
 };
 
 use anyhow::Context;
+use constants::{LIBRARY_DIR, SUBMISSION_DIR, SUBMISSION_INPUT_MAIN, SUBMISSION_OUTPUT};
 use fn_error_context::context;
 use utils::fs::{open_to_read, open_to_write};
-
-fn submission_dir(file: &str) -> String {
-    format!("submission/src/{file}")
-}
-
-fn library_dir(file: &str) -> String {
-    format!("library/src/{file}")
-}
 
 fn main() {
     if let Err(e) = finalize_submission() {
@@ -22,8 +15,8 @@ fn main() {
 }
 
 fn finalize_submission() -> anyhow::Result<()> {
-    let main = open_to_read(submission_dir("main.rs"))?;
-    let mut submission = open_to_write(submission_dir("submission.rs"))?;
+    let main = open_to_read(SUBMISSION_INPUT_MAIN)?;
+    let mut submission = open_to_write(SUBMISSION_OUTPUT)?;
     let mut visible = true;
 
     for line in main.lines() {
@@ -43,7 +36,7 @@ fn finalize_submission() -> anyhow::Result<()> {
             let module = module.strip_suffix(';').unwrap();
 
             append_module(
-                &submission_dir(&format!("{module}.rs")),
+                &format!("{SUBMISSION_DIR}/{module}.rs"),
                 module,
                 &mut submission,
                 "",
@@ -57,10 +50,7 @@ fn finalize_submission() -> anyhow::Result<()> {
         }
     }
 
-    println!(
-        "Submission is written to {}",
-        submission_dir("submission.rs")
-    );
+    println!("Submission is written to {SUBMISSION_OUTPUT}");
 
     Ok(())
 }
@@ -101,7 +91,7 @@ fn append_module(path: &str, module: &str, out_file: &mut File, ident: &str) -> 
 
                 for lib_mod in lib_mods {
                     append_module(
-                        &library_dir(&format!("{lib_mod}.rs")),
+                        &format!("{LIBRARY_DIR}/{lib_mod}.rs"),
                         lib_mod,
                         out_file,
                         &format!("{ident}    "),

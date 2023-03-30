@@ -4,16 +4,12 @@ use std::{
 };
 
 use anyhow::Context;
+use constants::{CURR_JSON, HISTORY_DIR, SUBMISSION_INPUT_SOLVE, SUBMISSION_TEMPLATE};
 use fn_error_context::context;
 use heck::ToSnakeCase;
 use serde::{Deserialize, Serialize};
 use serde_json::from_str;
 use utils::fs::{open_to_read, open_to_write};
-
-const TEMPLATE_RS: &str = "submission/src/template.rs";
-const SOLVE_RS: &str = "submission/src/solve.rs";
-const CURR_JSON: &str = "data/curr.json";
-const HISTORY_DIR: &str = "data/history";
 
 #[derive(Debug, Serialize, Deserialize)]
 struct Test {
@@ -34,9 +30,9 @@ pub(crate) async fn add_problem(problem: Problem) -> anyhow::Result<()> {
 
     backup_solution_of_prev_problem()?;
 
-    let template = open_to_read(TEMPLATE_RS)?;
+    let template = open_to_read(SUBMISSION_TEMPLATE)?;
 
-    let mut out_file = open_to_write(SOLVE_RS)?;
+    let mut out_file = open_to_write(SUBMISSION_INPUT_SOLVE)?;
 
     expand_template(&problem, template, &mut out_file)?;
 
@@ -91,7 +87,7 @@ fn store_problem(problem: &Problem) -> anyhow::Result<()> {
         .with_context(|| format!("Serializing {:?}", problem))
 }
 
-#[context("Performing backup of previous problem solution: {SOLVE_RS}")]
+#[context("Saving backup of previous problem solution")]
 fn backup_solution_of_prev_problem() -> anyhow::Result<()> {
     create_dir_all(HISTORY_DIR).with_context(|| format!("Creating {HISTORY_DIR}"))?;
 
@@ -101,7 +97,8 @@ fn backup_solution_of_prev_problem() -> anyhow::Result<()> {
 
         let dst = format!("{HISTORY_DIR}/{}.rs", prev_problem.name.to_snake_case());
 
-        copy(SOLVE_RS, &dst).with_context(|| format!("Copying {SOLVE_RS} to {dst}"))?;
+        copy(SUBMISSION_INPUT_SOLVE, &dst)
+            .with_context(|| format!("Copying {SUBMISSION_INPUT_SOLVE} to {dst}"))?;
     }
 
     Ok(())
