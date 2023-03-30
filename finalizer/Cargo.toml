@@ -1,10 +1,11 @@
 [package]
 name = "finalizer"
-version = "0.1.0"
-edition = "2021"
-rust-version = "1.58"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
 
 [dependencies]
-anyhow = "1"
-fn-error-context = "0.2"
-utils = { path = "../utils" }
+anyhow.workspace = true
+fn-error-context.workspace = true
+utils.workspace = true
