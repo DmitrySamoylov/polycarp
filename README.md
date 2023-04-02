@@ -14,6 +14,10 @@ Competitive programming assistant.
 8. Generate [submission.rs][submission.rs] using `cargo run --bin finalizer`.
 9. Upload [submission.rs][submission.rs] to e-judge ([example][example-problem-submission]).
 
+
+https://user-images.githubusercontent.com/56959852/229355124-3670f984-fc7e-4450-be64-16d81e231873.mp4
+
+
 ## Features
 
 ### Extendable library
