@@ -1,6 +1,17 @@
 # Polycarp
 
-Competitive programming assistant.
+Competitive Programming Assistant for Rust.
+
+I drew inspiration from the JHelper plugin for CLion, but I made Polycarp a regular Rust repository that is not bound to
+any IDE.
+
+With Polycarp, you can listen to parsed tasks from Competitive Assistant browser extension and generate tests with ease.
+All you need is to implement a single function, and you're good to go! Additionally, I included a library with commonly
+used algorithms, so you don't have to write the same code repeatedly.
+
+If you encounter any issues or have feedback, feel free to report them on the GitHub page.
+
+[Discussion at Codeforces Blogs][codeforces-post].
 
 ## Quick start
 
@@ -14,9 +25,7 @@ Competitive programming assistant.
 8. Generate [submission.rs][submission.rs] using `cargo run --bin finalizer`.
 9. Upload [submission.rs][submission.rs] to e-judge ([example][example-problem-submission]).
 
-
 https://user-images.githubusercontent.com/56959852/229355124-3670f984-fc7e-4450-be64-16d81e231873.mp4
-
 
 ## Features
 
@@ -60,11 +69,20 @@ This way user can just clone this repo and start competing without any additiona
 When a new problem is parsed, then previous [solve.rs][solve.rs] is copied to [history][history] directory (which is
 added to `.gitignore`).
 
+[codeforces-post]: https://codeforces.com/blog/entry/114637
+
 [companion-ff]: https://addons.mozilla.org/ru/firefox/addon/competitive-companion/
+
 [companion-chrome]: https://chrome.google.com/webstore/detail/competitive-companion/cjnmckjndlpiamhfimnnjmnckgghkjbl
+
 [history]: data/history
+
 [example-problem]: https://codeforces.com/problemset/problem/1003/A?locale=en
+
 [example-problem-submission]: https://codeforces.com/contest/1003/submission/109911833?locale=en
+
 [library]: library/src
+
 [solve.rs]: submission/src/solve.rs
+
 [submission.rs]: submission/src/submission.rs
